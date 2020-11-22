@@ -14,9 +14,9 @@
 
 <body>
     <div class="container-fluid">
-        <h1 class="text-center text-danger mt-2 pt-2">Productos disponibles:</h1> 
-        <?php include 'db/db_list.php'; ?>
-        <a href="insert.php">Nuevo producto</a>
+        <h1 class="text-center text-danger mt-2 pt-2">Productos disponibles:</h1> <br>
+        <?php include 'db/db_list.php'; ?> <br>
+        <a href="insert.php" class="btn btn-primary btn-lg my-1 float-right ">Nuevo producto</a>
 
     </div>
 </body>
