@@ -20,15 +20,15 @@
         </div>
         <div class='form-group font-weight-bold'>
             <label for='producto'>Nombre del producto:</label>
-            <input type='text' readonly class='form-control' id='producto' name='producto' aria-describedby='producto' value='$producto'>
+            <input type='text' class='form-control' id='producto' name='producto' aria-describedby='producto' value='$producto'>
         </div>
         <div class='form-group font-weight-bold'>
             <label for='precio'>Precio del producto:</label>
-            <input type='number' step='any' readonly class='form-control' id='precio' name='precio' aria-describedby='precio' value='$precio'>
+            <input type='number' step='any' class='form-control' id='precio' name='precio' aria-describedby='precio' value='$precio'>
         </div>
         <div class='form-group font-weight-bold'>
             <label for='existencias'>Cantidad en existencia:</label>
-            <input type='number' readonly class='form-control' id='existencias' name='existencias' aria-describedby='precio' value='$existencias'>
+            <input type='number' class='form-control' id='existencias' name='existencias' aria-describedby='precio' value='$existencias'>
         </div>
         ";
 
