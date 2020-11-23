@@ -11,8 +11,8 @@
                 <th>Precio:</th>
                 <th>Existencias:</th>
                 <th>Ver</th>
-                <th>Actualizar:</th>
-                <th>Borrar:</th>
+                <th>Actualizar</th>
+                <th>Borrar</th>
             </tr>
             </thead>
             ";
