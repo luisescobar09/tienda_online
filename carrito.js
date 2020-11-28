@@ -13,8 +13,8 @@ function total()  {
 
   else {
 
-    if (cantidad<=0 || cantidad>=10) {
-      alert("La cantidad de productos debe ser mayor a 0 y menor a 10, verificar datos.");
+    if (cantidad<=0) {
+      alert("La cantidad de productos debe ser mayor a 0, verificar datos.");
     }
 
     else {
@@ -41,7 +41,7 @@ function avanzar()  {
       return false;
   }
   else {
-    alert("Gracias por su compra"); 
+
     //validar.disabled = false;
   }
       	        

@@ -1,3 +1,89 @@
+<?php
+        
+        $db = new SQLite3("tienda.db");
+        $producto = $_POST["producto"];
+        $cantidad = $_POST["cantidad"];
+        $precio = $_POST["producto"];
+        
+        $consulta = $db->query("SELECT * from productos where precio = '$precio';");
+
+        while ($row = $consulta->fetchArray() ) {
+                $id_producto = $row['id_producto'];
+                $product = $row['producto'];
+                $existencia = $row['existencias'];
+        }
+
+        if ($existencia < $cantidad) {
+            header('Location: tienda-error.php');
+        }
+        else {
+            $nueva_existencia = $existencia - $cantidad;
+            $db->exec("UPDATE productos SET existencias='$nueva_existencia'  WHERE id_producto='$id_producto';");
+            date_default_timezone_set("America/Mexico_City");
+            $fecha_compra = date('d-m-Y');
+            $hora_compra = date('H:i:s');
+            $precio = $_POST["producto"];
+            $cantidad = $_POST["cantidad"];
+            $resultado = $precio * $cantidad;
+            $pago = $_POST["pagoss"];
+            $cambio = $pago - $resultado;
+
+            $db->exec("INSERT INTO ticket (fecha, hora_venta, cantidad_producto, producto, total_producto) VALUES ('$fecha_compra', '$hora_compra', '$cantidad', '$product', '$resultado');");
+        
+        $detalle_ticket = "<div class='container'>
+		  <div class='row justify-content-center mt-2 pt-2 text-white font-italic'>
+			  <div class='col-md-7 '>
+          <h1 class='display-3 font-weight-bold text-center'>Luis' Sports:</h1>
+          <hr class='bg-warning'><br>
+          <div class='text-center h3'>
+            <div class='form-group'>
+               <h3>Fecha: $fecha_compra</h3> <br>
+                <h3> Hora: $hora_compra</h3>
+                </div> <br>
+                        </div> <br> </br>
+
+                        <div class = 'h3 text-center'>
+                                    <div class='row form-group'>
+                                        <label for='producto' class='col-form-label col-md-12 h1'>Producto:  $product</label>
+                        </div>					
+
+                        <div class='row form-group'>
+                                <label for='cantidad' class='col-form-label col-md-12 h1'>Cantidad:  $cantidad</label>
+                        </div>
+
+                        <div class='row form-group'>
+                                        <label for='precio' class='col-form-label col-md-12 h1'>Precio unitario: $precio</label>
+
+                        </div>
+                        
+                        <div class='row form-group'>
+                                        <label for='total' class='col-form-label col-md-12 h1'>Total a pagar:   $resultado</label>
+
+                        </div>           
+
+                        <div class='row form-group'>
+                                        <label for='total' class='col-form-label col-md-12 h1'>Paga con:    $pago</label>
+                        </div>   
+
+                        <div class='row form-group'>
+                                        <label for='total' class='col-form-label col-md-12 h1'>Cambio:   $cambio</label>
+                        </div>    
+                        </center> <br>
+                
+                        <div class='row form-group'>
+                                        <label for='lol' class='col-form-label col-md-4'></label>
+                            <div class='col-md-7'> <br>
+                        <a href='tienda.php'>  
+                        <button type='' class='btn btn-outline-success btn-lg my-1 float-right' onclick='(cerrarVentana)' id='retunrn'>Comprar nuevamente</button>
+                        </a>       
+                        </div>
+
+                        </div>
+                    </div>
+                    </div>";               
+    }
+?>
+
 <html>
   <head>
       <!-- Required meta tags -->
@@ -21,140 +107,8 @@
   </head>
     
   <body class="bg-dark">
-	  <div class="container">
-		  <div class="row justify-content-center mt-2 pt-2 text-white font-italic">
-			  <div class="col-md-7 ">
-          <h1 class="display-3 font-weight-bold text-center">Luis' Sports:</h1>
-          <hr class="bg-warning"><br>
-          <div class="text-center h3">
-          <script type="text/javascript">
-            //<![CDATA[
-            function makeArray() {
-            for (i = 0; i<makeArray.arguments.length; i++)
-            this[i + 1] = makeArray.arguments[i];}
-            var months = new makeArray('01','02','03','04','05',
-            '06','07','08','09','10','11','12');
-            var date = new Date();
-            var day = date.getDate();
-            var month = date.getMonth() + 1;
-            var yy = date.getYear();
-            var year = (yy < 1000) ? yy + 1900 : yy;
-            document.write("Fecha: "+day + "-" + months[month] + "-" + year);
-            //]]>
-          </script> 
-
-          <script type="text/javascript">
-            var d = new Date();
-            document.write("Hora: "+d.getHours(),':'+d.getMinutes(),':'+d.getSeconds());
-          </script>
-          </div> <br> </br>
-
-          <div class = "h3 text-center">
-					<div class="row form-group">
-						<label for="producto" class="col-form-label col-md-6 h1">Producto:</label>
-            <div class="col-md-6 h3">
-              <?php  
-                $producto = $_POST["producto"];
-                switch ($producto) {
-                  case "1550":
-                    echo "Jersey Cruz Azul local.";
-                    break;
-                  case "1250":
-                    echo "Jersey Pachuca local.";
-                    break;
-                  case "1400":
-                    echo "Jersey América visitante.";
-                    break;
-                  case "1350":
-                    echo "Jersey Pumas visitante.";
-                    break;
-                  case "1300":
-                    echo "Jersey Tigres local.";
-                    break;
-                  case "1200":
-                    echo "Jersey Monterrey visitante.";
-                    break;
-                  case "950":
-                    echo "Jersey Puebla local.";
-                    break;
-                  case "1050":
-                    echo "Jersey Tijuana local.";
-                    break;  
-                  default:
-                    echo "Artículo no válido o no disponible.";
-                }
-              ?>
-            </div>
-          </div>					
-
-          <div class="row form-group">
-						<label for="cantidad" class="col-form-label col-md-6 h1">Cantidad:</label>
-            <div class="col-md-6">
-              <?php  
-                $cantidad = $_POST["cantidad"];
-                print ($cantidad." artículo(s).");
-               ?> 
-            </div>
-          </div>
-
-          <div class="row form-group">
-						<label for="precio" class="col-form-label col-md-6 h1">Precio unitario:</label>
-            <div class="col-md-6">
-              <?php  
-                $precio = $_POST["producto"];
-                print ("$ ".$precio.".");
-               ?> 
-            </div>
-          </div>
-          
-
-          <div class="row form-group">
-						<label for="total" class="col-form-label col-md-6 h1">Total a pagar:</label>
-            <div class="col-md-6">
-              <?php  
-                $precio = $_POST["producto"];
-                $cantidad = $_POST["cantidad"];
-                $resultado = $precio * $cantidad;
-                print ("$ ". $resultado.".");
-               ?> 
-            </div>
-          </div>           
-
-          <div class="row form-group">
-						<label for="total" class="col-form-label col-md-6 h1">Paga con:</label>
-            <div class="col-md-6">
-              <?php  
-                $pago = $_POST["pagoss"];
-                print ("$ ".$pago.".");
-               ?> 
-            </div>
-          </div>   
-
-        <div class="row form-group">
-						<label for="total" class="col-form-label col-md-6 h1">Cambio:</label>
-            <div class="col-md-6">
-              <?php  
-                $precio = $_POST["producto"];
-                $cantidad = $_POST["cantidad"];
-                $resultado = $precio * $cantidad;
-                $pago = $_POST["pagoss"];
-                $cambio = $pago - $resultado;
-                print ("$ ". $cambio.".");
-               ?> 
-            </div>
-          </div>    
-        </center>
- 
-        <div class="row form-group">
-						<label for="lol" class="col-form-label col-md-4"></label>
-            <div class="col-md-7">
-          <a href="tienda.php">  
-          <button type=" " class="btn btn-outline-success btn-lg my-1 float-right " onclick="(cerrarVentana)" id="retunrn">Comprar nuevamente</button>
-          </a>       
-        </div>
-
-        </div>
-      </div>
-    </div>
+    <?php 
+        print($detalle_ticket);
+    ?>
   </body>
 </html>

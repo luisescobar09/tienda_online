@@ -27,6 +27,9 @@
 	<div class="container">
 		<div class="row justify-content-center mt-2 pt-2 text-white font-italic">
 			<div class="col-md-7 ">
+                <div class="alert alert-danger text-center font-weight-bold" role="alert">
+                Error al procesar la compra, la cantidad ingresada es menor a la de nuestras existencias, intente de nuevo.
+                </div>
 				<h1 class="display-4 font-weight-bold text-center">Encuentra el jersey de tu equipo favorito aquí:</h1>
 				<hr class="bg-warning">
 				<h5 class="pb-0 mb-0">Compra ahora:</h5>
